@@ -5,7 +5,8 @@ public class Main {
 	public static void main(String[] args) {
 		//first commit
 		//chaeyoung first commit
-		//Practice
+		//Practice1
+		//Practice2
 	}
 
 }
