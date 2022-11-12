@@ -33,9 +33,9 @@ public class TyaGame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫으면 프로세스도 종료
 		setVisible(true);
 		setBackground(new Color(0, 0, 0, 0));
-		//setLayout(null);
+		setLayout(null);
 		
-		startButton.setBounds(480, 230, 217, 67);
+		startButton.setBounds(530, 350, 217, 67);
 		startButton.setBorderPainted(false);
 		startButton.setContentAreaFilled(false);
 		startButton.setFocusPainted(false);
@@ -55,7 +55,7 @@ public class TyaGame extends JFrame {
 		});
 		add(startButton);
 		
-		howtoplayButton.setBounds(430, 260, 400, 69);
+		howtoplayButton.setBounds(440, 440, 400, 69);
 		howtoplayButton.setBorderPainted(false);
 		howtoplayButton.setContentAreaFilled(false);
 		howtoplayButton.setFocusPainted(false);
@@ -75,7 +75,7 @@ public class TyaGame extends JFrame {
 		});
 		add(howtoplayButton);
 		
-		exitButton.setBounds(480, 200, 149, 67);
+		exitButton.setBounds(565, 530, 149, 67);
 		exitButton.setBorderPainted(false);
 		exitButton.setContentAreaFilled(false);
 		exitButton.setFocusPainted(false);
