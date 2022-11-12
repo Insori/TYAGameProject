@@ -1,5 +1,6 @@
 package tya_game1;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -21,14 +22,17 @@ public class TyaGame extends JFrame {
 	private JButton howtoplayButton = new JButton(howtoplayButtonImage);
 	
 	public TyaGame() {
+		setUndecorated(true);
 		setTitle("TYA Game");
 		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
 		setResizable(false);// 창의 크기를 변경하지 못하게
 		setLocationRelativeTo(null);	//화면의 위치가 가운데로 옴.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫으면 프로세스도 종료
 		setVisible(true);
+		setBackground(new Color(0, 0, 0, 0));
+		setLayout(null);
 		
-		startButton.setBounds(40, 200, 400, 100);
+		startButton.setBounds(480, 250, 300, 300);
 		startButton.setBorderPainted(false);
 		startButton.setContentAreaFilled(false);
 		startButton.setFocusPainted(false);
@@ -50,7 +54,7 @@ public class TyaGame extends JFrame {
 		});
 		add(startButton);
 		
-		howtoplayButton.setBounds(40, 330, 400, 100);
+		howtoplayButton.setBounds(430, 320, 400, 400);
 		howtoplayButton.setBorderPainted(false);
 		howtoplayButton.setContentAreaFilled(false);
 		howtoplayButton.setFocusPainted(false);
@@ -71,14 +75,6 @@ public class TyaGame extends JFrame {
 			}
 		});
 		add(howtoplayButton);
-		
-		howtoplayButton.setBounds(1245, 0, 30, 30);
-		howtoplayButton.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				
-			}
-		});
-		add(howtoplayButton);
 	}
 	
 
@@ -92,6 +88,7 @@ public class TyaGame extends JFrame {
 	
 	public void screenDraw(Graphics g) {
 		g.drawImage(background, 0, 0, null);
+		paintComponents(g);
 		this.repaint();	//paint함수로 돌아감.
 	}
 
