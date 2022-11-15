@@ -3,6 +3,7 @@ package tya_game1;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -28,14 +29,15 @@ public class TyaGame extends JFrame {
 		setUndecorated(true);
 		setTitle("TYA Game");
 		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
-		setResizable(false);// 창의 크기를 변경하지 못하게
+		//setResizable(true);// 창의 크기를 변경하지 못하게
 		setLocationRelativeTo(null);	//화면의 위치가 가운데로 옴.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫으면 프로세스도 종료
 		setVisible(true);
 		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
 		
-		startButton.setBounds(530, 350, 217, 67);
+		//시작버튼
+		startButton.setBounds(760, 535, 400, 100);
 		startButton.setBorderPainted(false);
 		startButton.setContentAreaFilled(false);
 		startButton.setFocusPainted(false);
@@ -55,7 +57,8 @@ public class TyaGame extends JFrame {
 		});
 		add(startButton);
 		
-		howtoplayButton.setBounds(440, 440, 400, 69);
+		//게임방법 버튼
+		howtoplayButton.setBounds(670, 657, 600, 100);
 		howtoplayButton.setBorderPainted(false);
 		howtoplayButton.setContentAreaFilled(false);
 		howtoplayButton.setFocusPainted(false);
@@ -75,7 +78,8 @@ public class TyaGame extends JFrame {
 		});
 		add(howtoplayButton);
 		
-		exitButton.setBounds(565, 530, 149, 67);
+		//나가기 버튼
+		exitButton.setBounds(760, 780, 400, 100);
 		exitButton.setBorderPainted(false);
 		exitButton.setContentAreaFilled(false);
 		exitButton.setFocusPainted(false);
@@ -100,7 +104,8 @@ public class TyaGame extends JFrame {
 
 	public void paint(Graphics g) {
 		//그리는 함수 
-		screenImage = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
+		screenImage = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT	);
 		screenGraphic = screenImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(screenImage, 0, 0, null);	//background를 그려줌 
