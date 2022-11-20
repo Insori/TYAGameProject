@@ -29,10 +29,12 @@ public class TyaGame extends JFrame {
 		  return 720;
 		 }
 	}
+	private int SCREEN_WIDTH = getScreenWidth();
+	private int SCREEN_HEIGHT = getScreenHeight();
 	
 	private Image screenImage;
 	private Graphics screenGraphic;
-	private ImageIcon background = new ImageIcon(Main.class.getResource("../images/background_title.jpg"));	//배경이미지
+	private Image background = new ImageIcon(Main.class.getResource("../images/background_title.jpg")).getImage();	//배경이미지
 	private ImageIcon startButtonImage = new ImageIcon(Main.class.getResource("../images/start.png"));	//시작 버튼
 	private ImageIcon howtoplayButtonImage = new ImageIcon(Main.class.getResource("../images/howtoplay.png"));	//방법 버튼
 	private ImageIcon exitButtonImage = new ImageIcon(Main.class.getResource("../images/exit.png"));
@@ -42,11 +44,9 @@ public class TyaGame extends JFrame {
 	private JButton exitButton = new JButton(exitButtonImage);
 	
 	public TyaGame() {
-
-		System.out.println("background : "+background.getIconWidth()+", "+background.getIconWidth());
 		setUndecorated(true);
 		setTitle("TYA Game");
-		setSize(getScreenWidth(), getScreenHeight());
+		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		//setResizable(true);// 창의 크기를 변경하지 못하게
 		setLocationRelativeTo(null);	//화면의 위치가 가운데로 옴.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫으면 프로세스도 종료
@@ -123,20 +123,14 @@ public class TyaGame extends JFrame {
 	public void paint(Graphics g) {
 		//그리는 함수 
 		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
-		screenImage = createImage(getScreenWidth(), getScreenHeight());
+		screenImage = createImage(SCREEN_WIDTH, SCREEN_HEIGHT);
 		screenGraphic = screenImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(screenImage, 0, 0, null);	//background를 그려줌 
 	}
 	
 	public void screenDraw(Graphics g) {
-		Image img = background.getImage();
-		Image changeImg =img.getScaledInstance(getScreenWidth(),getScreenHeight(),Image.SCALE_SMOOTH);
-		System.out.println("SCREEN_SIZE : "+getScreenWidth()+", "+getScreenHeight());
-		System.out.println("changeImg : "+changeImg.getWidth(null)+", "+changeImg.getHeight(null));
-		System.out.println("img : "+img.getWidth(null)+", "+img.getHeight(null));
-		
-		g.drawImage(changeImg , 0, 0, null);
+		g.drawImage(background , 0, 0, null);
 		paintComponents(g);
 		this.repaint();	//paint함수로 돌아감.
 	}
