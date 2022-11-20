@@ -131,7 +131,7 @@ public class TyaGame extends JFrame {
 		Image img = background.getImage();
 		Image changeImg =img.getScaledInstance(getScreenWidth(),getScreenHeight(),Image.SCALE_SMOOTH);
 		System.out.println(getScreenWidth()+", "+getScreenHeight());
-		g.drawImage(img , 0, 0, null);
+		g.drawImage(changeImg , 0, 0, null);
 		paintComponents(g);
 		this.repaint();	//paint함수로 돌아감.
 	}
