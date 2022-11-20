@@ -122,6 +122,7 @@ public class TyaGame extends JFrame {
 		//그리는 함수 
 		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
 		screenImage = createImage(getScreenWidth(), getScreenHeight());
+		System.out.println("가로 : "+getScreenWidth()+", 세로 : "+getScreenHeight());
 		screenGraphic = screenImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(screenImage, 0, 0, null);	//background를 그려줌 
