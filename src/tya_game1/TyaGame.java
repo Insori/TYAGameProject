@@ -33,7 +33,6 @@ public class TyaGame extends JFrame {
 	private Image screenImage;
 	private Graphics screenGraphic;
 	private ImageIcon background = new ImageIcon(Main.class.getResource("../images/background_title.jpg"));	//배경이미지
-	
 	private ImageIcon startButtonImage = new ImageIcon(Main.class.getResource("../images/start.png"));	//시작 버튼
 	private ImageIcon howtoplayButtonImage = new ImageIcon(Main.class.getResource("../images/howtoplay.png"));	//방법 버튼
 	private ImageIcon exitButtonImage = new ImageIcon(Main.class.getResource("../images/exit.png"));
@@ -131,6 +130,7 @@ public class TyaGame extends JFrame {
 	public void screenDraw(Graphics g) {
 		Image img = background.getImage();
 		Image changeImg =img.getScaledInstance(getScreenWidth(),getScreenHeight(),Image.SCALE_SMOOTH);
+		System.out.println(getScreenWidth()+", "+getScreenHeight());
 		g.drawImage(img , 0, 0, null);
 		paintComponents(g);
 		this.repaint();	//paint함수로 돌아감.
