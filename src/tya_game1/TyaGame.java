@@ -42,6 +42,8 @@ public class TyaGame extends JFrame {
 	private JButton exitButton = new JButton(exitButtonImage);
 	
 	public TyaGame() {
+
+		System.out.println("background : "+background.getIconWidth()+", "+background.getIconWidth());
 		setUndecorated(true);
 		setTitle("TYA Game");
 		setSize(getScreenWidth(), getScreenHeight());
@@ -130,7 +132,10 @@ public class TyaGame extends JFrame {
 	public void screenDraw(Graphics g) {
 		Image img = background.getImage();
 		Image changeImg =img.getScaledInstance(getScreenWidth(),getScreenHeight(),Image.SCALE_SMOOTH);
-		System.out.println(getScreenWidth()+", "+getScreenHeight());
+		System.out.println("SCREEN_SIZE : "+getScreenWidth()+", "+getScreenHeight());
+		System.out.println("changeImg : "+changeImg.getWidth(null)+", "+changeImg.getHeight(null));
+		System.out.println("img : "+img.getWidth(null)+", "+img.getHeight(null));
+		
 		g.drawImage(changeImg , 0, 0, null);
 		paintComponents(g);
 		this.repaint();	//paint함수로 돌아감.
