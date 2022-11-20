@@ -19,14 +19,14 @@ public class TyaGame extends JFrame {
 		 try {
 		  return Toolkit.getDefaultToolkit().getScreenSize().height;
 		 } catch (Throwable t) {
-		  return 500;
+		  return 1280;
 		 }
 	}
 	protected static int getScreenWidth() {
 		 try {
 		  return Toolkit.getDefaultToolkit().getScreenSize().width;
 		 } catch (Throwable t) {
-		  return 500;
+		  return 720;
 		 }
 	}
 	
