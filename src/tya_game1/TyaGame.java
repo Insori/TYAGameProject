@@ -5,15 +5,31 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class TyaGame extends JFrame {
+
+	protected static int getScreenHeight() {
+		 try {
+		  return Toolkit.getDefaultToolkit().getScreenSize().height;
+		 } catch (Throwable t) {
+		  return 500;
+		 }
+	}
+	protected static int getScreenWidth() {
+		 try {
+		  return Toolkit.getDefaultToolkit().getScreenSize().width;
+		 } catch (Throwable t) {
+		  return 500;
+		 }
+	}
+	
 	private Image screenImage;
 	private Graphics screenGraphic;
 	private Image background = new ImageIcon(Main.class.getResource("../images/background_title.jpg")).getImage();	//배경이미지
@@ -28,7 +44,7 @@ public class TyaGame extends JFrame {
 	public TyaGame() {
 		setUndecorated(true);
 		setTitle("TYA Game");
-		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+		setSize(getScreenWidth(), getScreenHeight());
 		//setResizable(true);// 창의 크기를 변경하지 못하게
 		setLocationRelativeTo(null);	//화면의 위치가 가운데로 옴.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫으면 프로세스도 종료
@@ -105,7 +121,7 @@ public class TyaGame extends JFrame {
 	public void paint(Graphics g) {
 		//그리는 함수 
 		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
-		screenImage = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT	);
+		screenImage = createImage(getScreenWidth(), getScreenHeight());
 		screenGraphic = screenImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(screenImage, 0, 0, null);	//background를 그려줌 
