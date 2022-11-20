@@ -34,7 +34,8 @@ public class TyaGame extends JFrame {
 	
 	private Image screenImage;
 	private Graphics screenGraphic;
-	private Image background = new ImageIcon(Main.class.getResource("../images/background_title.jpg")).getImage();	//배경이미지
+	private Image b = new ImageIcon(Main.class.getResource("../images/background_title.jpg")).getImage();	//배경이미지
+	private Image background = b.getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	private ImageIcon startButtonImage = new ImageIcon(Main.class.getResource("../images/start.png"));	//시작 버튼
 	private ImageIcon howtoplayButtonImage = new ImageIcon(Main.class.getResource("../images/howtoplay.png"));	//방법 버튼
 	private ImageIcon exitButtonImage = new ImageIcon(Main.class.getResource("../images/exit.png"));
