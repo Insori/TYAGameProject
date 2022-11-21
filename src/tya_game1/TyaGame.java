@@ -36,7 +36,7 @@ public class TyaGame extends JFrame {
 	private Image screenImage;
 	private Graphics screenGraphic;
 	private Image background = new ImageIcon(Main.class.getResource("../images/background_title.jpg")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0); //배경 이미지 크기 변경
-	
+
 	//startButtonImage 크기 지정
 	private Image startButtonImage = new ImageIcon(Main.class.getResource("../images/start.png")).getImage();//시작 버튼 Image
 	private Image startButton1 = startButtonImage.getScaledInstance(SCREEN_WIDTH/6, SCREEN_WIDTH/20, 0);	//Image 크기 지정
@@ -110,7 +110,8 @@ public class TyaGame extends JFrame {
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
+				new Howtoplay();
+				setVisible(false);
 			}
 		});
 		add(howtoplayJButton);
@@ -137,8 +138,6 @@ public class TyaGame extends JFrame {
 		add(exitJButton);
 	}
 	
-	
-
 	public void paint(Graphics g) {
 		//그리는 함수 
 		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
