@@ -36,35 +36,49 @@ public class TyaGame extends JFrame {
 	private Image screenImage;
 	private Graphics screenGraphic;
 	private Image background = new ImageIcon(Main.class.getResource("../images/background_title.jpg")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0); //배경 이미지 크기 변경
-	private ImageIcon startButtonImage = new ImageIcon(Main.class.getResource("../images/start.png"));//시작 버튼
-	private ImageIcon howtoplayButtonImage = new ImageIcon(Main.class.getResource("../images/howtoplay.png"));	//방법 버튼
-	private ImageIcon exitButtonImage = new ImageIcon(Main.class.getResource("../images/exit.png"));
-	private JButton startButton = new JButton(startButtonImage);
-	private JButton howtoplayButton = new JButton(howtoplayButtonImage);
-	private JButton exitButton = new JButton(exitButtonImage);
+	
+	//startButtonImage 크기 지정
+	private Image startButtonImage = new ImageIcon(Main.class.getResource("../images/start.png")).getImage();//시작 버튼 Image
+	private Image startButton1 = startButtonImage.getScaledInstance(SCREEN_WIDTH/6, SCREEN_WIDTH/20, 0);	//Image 크기 지정
+	private ImageIcon startButton = new ImageIcon(startButton1);	//Image->Imageicon
+	
+	//howtoplayButtonImage 크기 지정
+	private Image howtoplayButtonImage = new ImageIcon(Main.class.getResource("../images/howtoplay.png")).getImage();	//방법 버튼
+	private Image howtoplayButton1 = howtoplayButtonImage.getScaledInstance(SCREEN_WIDTH/3, SCREEN_WIDTH/19, 0);
+	private ImageIcon howtoplayButton = new ImageIcon(howtoplayButton1);
+	
+	//exitButtonImage 크기 지정
+	private Image exitButtonImage = new ImageIcon(Main.class.getResource("../images/exit.png")).getImage();
+	private Image exitButton1 = exitButtonImage.getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/20, 0);
+	private ImageIcon exitButton = new ImageIcon(exitButton1);
+	
+	private JButton startJButton = new JButton(startButton);
+	private JButton howtoplayJButton = new JButton(howtoplayButton);
+	private JButton exitJButton = new JButton(exitButton);
 	
 	public TyaGame() {
 		setUndecorated(true);
 		setTitle("TYA Game");
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-		//setResizable(true);// 창의 크기를 변경하지 못하게
 		setLocationRelativeTo(null);	//화면의 위치가 가운데로 옴.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫으면 프로세스도 종료
 		setVisible(true);
 		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
+	
+		//버튼 크기, 위치
 		int Button_width = SCREEN_WIDTH;
-		int Button_height = SCREEN_HEIGHT/10;
+		int Button_height = SCREEN_WIDTH/20;
 		int Button_X = 0;
-		int Button_Y = 535;
-		int Button_YPlus = 120;
+		int Button_Y = SCREEN_WIDTH/4+SCREEN_WIDTH/31;
+		int Button_YPlus = SCREEN_WIDTH/16;
 		
 		//시작버튼
-		startButton.setBounds(Button_X, Button_Y, Button_width, Button_height);
-		startButton.setBorderPainted(false);
-		startButton.setContentAreaFilled(false);
-		startButton.setFocusPainted(false);
-		startButton.addMouseListener(new MouseAdapter() {
+		startJButton.setBounds(Button_X, Button_Y, Button_width, Button_height);
+		startJButton.setBorderPainted(false);
+		startJButton.setContentAreaFilled(false);
+		startJButton.setFocusPainted(false);
+		startJButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -78,14 +92,14 @@ public class TyaGame extends JFrame {
 				//게임 시작 이벤트
 			}
 		});
-		add(startButton);
+		add(startJButton);
 		
 		//게임방법 버튼
-		howtoplayButton.setBounds(Button_X, Button_Y+Button_YPlus, Button_width, Button_height);
-		howtoplayButton.setBorderPainted(false);
-		howtoplayButton.setContentAreaFilled(false);
-		howtoplayButton.setFocusPainted(false);
-		howtoplayButton.addMouseListener(new MouseAdapter() {
+		howtoplayJButton.setBounds(Button_X, Button_Y+Button_YPlus, Button_width, Button_height);
+		howtoplayJButton.setBorderPainted(false);
+		howtoplayJButton.setContentAreaFilled(false);
+		howtoplayJButton.setFocusPainted(false);
+		howtoplayJButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -99,14 +113,14 @@ public class TyaGame extends JFrame {
 				
 			}
 		});
-		add(howtoplayButton);
+		add(howtoplayJButton);
 		
 		//나가기 버튼
-		exitButton.setBounds(Button_X, Button_Y+(Button_YPlus*2), Button_width, Button_height);
-		exitButton.setBorderPainted(false);
-		exitButton.setContentAreaFilled(false);
-		exitButton.setFocusPainted(false);
-		exitButton.addMouseListener(new MouseAdapter() {
+		exitJButton.setBounds(Button_X, Button_Y+(Button_YPlus*2), Button_width, Button_height);
+		exitJButton.setBorderPainted(false);
+		exitJButton.setContentAreaFilled(false);
+		exitJButton.setFocusPainted(false);
+		exitJButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -120,7 +134,7 @@ public class TyaGame extends JFrame {
 				System.exit(0);
 			}
 		});
-		add(exitButton);
+		add(exitJButton);
 	}
 	
 	
