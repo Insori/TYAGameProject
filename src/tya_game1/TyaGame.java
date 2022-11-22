@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 
 public class TyaGame extends JFrame {
 
+	//노트북 해상도 구하기
 	protected static int getScreenHeight() {
 		 try {
 		  return Toolkit.getDefaultToolkit().getScreenSize().height;
