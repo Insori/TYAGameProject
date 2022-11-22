@@ -38,7 +38,7 @@ public class Howtoplay extends JFrame {
 	private Image background_howtoplay = new ImageIcon(Main.class.getResource("../images/background_howtoplay.jpg")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 
 	private Image backButtonImage = new ImageIcon(Main.class.getResource("../images/back.png")).getImage();	//방법 버튼
-	private Image backButton1 = backButtonImage.getScaledInstance(SCREEN_WIDTH/3, SCREEN_WIDTH/19, 0);
+	private Image backButton1 = backButtonImage.getScaledInstance(SCREEN_WIDTH/13, SCREEN_HEIGHT/6, 0);
 	private ImageIcon backButton = new ImageIcon(backButton1);
 	
 	private JButton backJButton = new JButton(backButton);
@@ -55,7 +55,7 @@ public class Howtoplay extends JFrame {
 		int Button_height = SCREEN_WIDTH/20;
 		
 		//돌아가기 버튼
-		backJButton.setBounds(0, 0, Button_width, Button_height);
+		backJButton.setBounds(0, 0, SCREEN_WIDTH/13, Button_height);
 		backJButton.setBorderPainted(false);
 		backJButton.setContentAreaFilled(false);
 		backJButton.setFocusPainted(false);
