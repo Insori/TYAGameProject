@@ -31,7 +31,7 @@ public class BossMode extends JFrame {
 	
 	private Image screenImage;
 	private Graphics screenGraphic;
-	private Image background_howtoplay = new ImageIcon(Main.class.getResource("../images/background_howtoplay.jpg"))
+	private Image background_game = new ImageIcon(Main.class.getResource("../images/background_game.jpg"))
 			.getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	
 	public BossMode() {
@@ -56,7 +56,7 @@ public class BossMode extends JFrame {
 	}
 	
 	public void screenDraw(Graphics g) {
-		g.drawImage(background_howtoplay , 0, 0, null);
+		g.drawImage(background_game, 0, 0, null);
 		paintComponents(g);
 		this.repaint();
 	}
