@@ -83,14 +83,18 @@ public class TyaGame extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
+				//startJButton.setIcon(exitButton);//이미지 바꾸기
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				//startJButton.setIcon(startButton);//이미지 바꾸기
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				//게임 시작 이벤트
+				new NormalMode();
+				setVisible(false);
 			}
 		});
 		add(startJButton);
