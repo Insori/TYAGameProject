@@ -68,14 +68,12 @@ public class TyaGame extends JFrame {
 		setLayout(null);
 	
 		//버튼 크기, 위치
-		int Button_width = SCREEN_WIDTH;
-		int Button_height = SCREEN_WIDTH/20;
-		int Button_X = 0;
+		int Button_X = SCREEN_WIDTH/2;
 		int Button_Y = SCREEN_WIDTH/4+SCREEN_WIDTH/31;
 		int Button_YPlus = SCREEN_WIDTH/16;
 		
 		//시작버튼
-		startJButton.setBounds(Button_X, Button_Y, Button_width, Button_height);
+		startJButton.setBounds(Button_X-SCREEN_WIDTH/12, Button_Y, startButton1.getWidth(startJButton), startButton1.getHeight(startJButton));
 		startJButton.setBorderPainted(false);
 		startJButton.setContentAreaFilled(false);
 		startJButton.setFocusPainted(false);
@@ -100,7 +98,7 @@ public class TyaGame extends JFrame {
 		add(startJButton);
 		
 		//게임방법 버튼
-		howtoplayJButton.setBounds(Button_X, Button_Y+Button_YPlus, Button_width, Button_height);
+		howtoplayJButton.setBounds(Button_X-SCREEN_WIDTH/6, Button_Y+Button_YPlus, howtoplayButton1.getWidth(howtoplayJButton), howtoplayButton1.getHeight(howtoplayJButton));
 		howtoplayJButton.setBorderPainted(false);
 		howtoplayJButton.setContentAreaFilled(false);
 		howtoplayJButton.setFocusPainted(false);
@@ -122,7 +120,7 @@ public class TyaGame extends JFrame {
 		add(howtoplayJButton);
 		
 		//나가기 버튼
-		exitJButton.setBounds(Button_X, Button_Y+(Button_YPlus*2), Button_width, Button_height);
+		exitJButton.setBounds(Button_X-SCREEN_WIDTH/20, Button_Y+(Button_YPlus*2), exitButton1.getWidth(exitJButton), exitButton1.getHeight(exitJButton));
 		exitJButton.setBorderPainted(false);
 		exitJButton.setContentAreaFilled(false);
 		exitJButton.setFocusPainted(false);
