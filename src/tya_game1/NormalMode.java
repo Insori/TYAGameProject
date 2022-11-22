@@ -37,7 +37,7 @@ public class NormalMode extends JFrame {
 	private Image screenImage;
 	private Graphics screenGraphic;
 	
-	private Image background_game = new ImageIcon(Main.class.getResource("../images/background_game.jpg")).getImage();
+	private Image background_game = new ImageIcon(Main.class.getResource("../images/background_game.jpg")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	private Image green_mon = new ImageIcon(Main.class.getResource("../images/GreenMon.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
 	private Image blue_mon = new ImageIcon(Main.class.getResource("../images/BlueMon.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
 	private Image red_mon = new ImageIcon(Main.class.getResource("../images/RedMon.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
