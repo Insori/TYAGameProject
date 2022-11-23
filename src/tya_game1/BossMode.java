@@ -42,25 +42,30 @@ public class BossMode extends JFrame {
 	private Image boss_blue = new ImageIcon(Main.class.getResource("../images/boss_blue.png")).getImage();
 	private Image boss_green = new ImageIcon(Main.class.getResource("../images/boss_green.png")).getImage();
 	private Image boss_pink = new ImageIcon(Main.class.getResource("../images/boss_pink.png")).getImage();
+	private Image boss_heart = new ImageIcon(Main.class.getResource("../images/boss_heart.png")).getImage();
 	
 	//눌리기 전 버튼 이미지
-	private Image redButton = new ImageIcon(Main.class.getResource("../images/red_button.png")).getImage();
-	private Image blueButton = new ImageIcon(Main.class.getResource("../images/blue_button.png")).getImage();
-	private Image greenButton = new ImageIcon(Main.class.getResource("../images/green_button.png")).getImage();
+	private Image redButton = new ImageIcon(Main.class.getResource("../images/button_red.png")).getImage();
+	private Image blueButton = new ImageIcon(Main.class.getResource("../images/button_blue.png")).getImage();
+	private Image greenButton = new ImageIcon(Main.class.getResource("../images/button_green.png")).getImage();
 	
 	//눌린 버튼 이미지
-	private Image redPressedButton = new ImageIcon(Main.class.getResource("../images/pressed_red_button.png")).getImage();
-	private Image bluePressedButton = new ImageIcon(Main.class.getResource("../images/pressed_blue_button.png")).getImage();
-	private Image greenPressedButton = new ImageIcon(Main.class.getResource("../images/pressed_green_button.png")).getImage();
+	private Image redPressedButton = new ImageIcon(Main.class.getResource("../images/pressed_button_red.png")).getImage();
+	private Image bluePressedButton = new ImageIcon(Main.class.getResource("../images/pressed_button_blue.png")).getImage();
+	private Image greenPressedButton = new ImageIcon(Main.class.getResource("../images/pressed_button_green.png")).getImage();
 	
 	//기본 이미지 설정
-	private Image boss = boss_pink;	
+	private Image boss = boss_red;	
 	private Image red = redButton;
 	private Image blue= blueButton;
 	private Image green = greenButton;
 	
 	//보스 체력
 	int boss_hp = 100;
+	
+	//boss 이미지 좌표
+	int bossX = (SCREEN_WIDTH/2)-140;
+	int bossY = (SCREEN_HEIGHT/2)-200;
 	
 	public BossMode() {
 		setUndecorated(true);
@@ -75,16 +80,25 @@ public class BossMode extends JFrame {
 			public void keyPressed(KeyEvent e) {	//키 눌렀을 때
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_LEFT:	//아래 방향키 눌렀을 때
-					//red = redPressedButton;
-					System.exit(0);
-					if(boss == boss_red) boss_hp--;
+					red = redPressedButton;
+					if(boss == boss_red) {
+						boss_hp--;
+						boss = boss_heart;
+//						try {
+//							Thread.sleep(1000);
+//							boss = boss_red;
+//						}catch(InterruptedException e1) {
+//							boss = boss_red;
+//						}
+					}
 					break;
 				case KeyEvent.VK_DOWN:	//왼쪽 방향키 눌렀을 때
 					blue = bluePressedButton;
 					if(boss == boss_blue) boss_hp--;
 					break;
 				case KeyEvent.VK_RIGHT:	//오른쪽 방향키 눌렀을 때
-					green = greenPressedButton;
+					//green = greenPressedButton;
+					System.exit(0);
 					if(boss == boss_green) boss_hp--;
 					break;
 				default:
@@ -107,6 +121,7 @@ public class BossMode extends JFrame {
 				}
 			}
 		});
+		if(boss_hp == 0) System.exit(0);
 	}
 	
 	public void paint(Graphics g) {
@@ -115,10 +130,10 @@ public class BossMode extends JFrame {
 		screenGraphic = screenImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(screenImage, 0, 0, null);
-		g.drawImage(boss, 500, 200, null);
-		g.drawImage(red, 400, 500, null);
-		g.drawImage(blue, 600, 500, null);
-		g.drawImage(green, 800, 500, null);
+		g.drawImage(boss, (SCREEN_WIDTH/2)-140, (SCREEN_HEIGHT/2)-200, null);
+		g.drawImage(red, (SCREEN_WIDTH/4)-38, (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/5), null);
+		g.drawImage(blue, (SCREEN_WIDTH/2)-38, (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/5), null);
+		g.drawImage(green, (SCREEN_WIDTH/2)+(SCREEN_WIDTH/4)-38, (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/5), null);
 	}
 	
 	public void screenDraw(Graphics g) {
