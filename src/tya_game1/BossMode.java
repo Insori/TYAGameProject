@@ -1,71 +1,81 @@
 package tya_game1;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class BossMode extends JFrame {
-	
+public class BossMode extends JFrame implements Runnable, KeyListener{
+
 	protected static int getScreenHeight() {
-		 try {
-		  return Toolkit.getDefaultToolkit().getScreenSize().height;
-		 } catch (Throwable t) {
-		  return 1280;
-		 }
+		try {
+			return Toolkit.getDefaultToolkit().getScreenSize().height;
+		} catch (Throwable t) {
+			return 1280;
+		}
 	}
+
 	protected static int getScreenWidth() {
-		 try {
-		  return Toolkit.getDefaultToolkit().getScreenSize().width;
-		 } catch (Throwable t) {
-		  return 720;
-		 }
+		try {
+			return Toolkit.getDefaultToolkit().getScreenSize().width;
+		} catch (Throwable t) {
+			return 720;
+		}
 	}
-	
+
 	private int SCREEN_WIDTH = getScreenWidth();
 	private int SCREEN_HEIGHT = getScreenHeight();
-	
+
 	//배경 이미지
 	private Image screenImage;
 	private Graphics screenGraphic;
-	private Image background_game = new ImageIcon(Main.class.getResource("../images/background_game.jpg"))
-			.getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-	
+	private Image background_game = new ImageIcon(Main.class.getResource("../images/background_game.jpg")).getImage()
+			.getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+
 	//보스 몬스터 이미지
 	private Image boss_red = new ImageIcon(Main.class.getResource("../images/boss_red.png")).getImage();
 	private Image boss_blue = new ImageIcon(Main.class.getResource("../images/boss_blue.png")).getImage();
 	private Image boss_green = new ImageIcon(Main.class.getResource("../images/boss_green.png")).getImage();
 	private Image boss_pink = new ImageIcon(Main.class.getResource("../images/boss_pink.png")).getImage();
 	private Image boss_heart = new ImageIcon(Main.class.getResource("../images/boss_heart.png")).getImage();
-	
-	//눌리기 전 버튼 이미지
-	private Image redButton = new ImageIcon(Main.class.getResource("../images/button_red.png")).getImage();
-	private Image blueButton = new ImageIcon(Main.class.getResource("../images/button_blue.png")).getImage();
-	private Image greenButton = new ImageIcon(Main.class.getResource("../images/button_green.png")).getImage();
-	
-	//눌린 버튼 이미지
-	private Image redPressedButton = new ImageIcon(Main.class.getResource("../images/pressed_button_red.png")).getImage();
-	private Image bluePressedButton = new ImageIcon(Main.class.getResource("../images/pressed_button_blue.png")).getImage();
-	private Image greenPressedButton = new ImageIcon(Main.class.getResource("../images/pressed_button_green.png")).getImage();
-	
+
+	//일시정지 버튼
+	private Image stop = new ImageIcon(Main.class.getResource("../images/stop.png")).getImage()
+			.getScaledInstance(SCREEN_WIDTH / 16, SCREEN_WIDTH / 16, 0);
+	private ImageIcon stopButton1 = new ImageIcon(stop);
+	private JButton stopJButton = new JButton(stopButton1);
+
+	//플레이어 이미지(대체)
+	private Image player = new ImageIcon(Main.class.getResource("../images/button_red.png")).getImage();
+
 	//기본 이미지 설정
-	private Image boss = boss_red;	
-	private Image red = redButton;
-	private Image blue= blueButton;
-	private Image green = greenButton;
-	
-	//보스 체력
-	int boss_hp = 100;
-	
+	private Image boss = boss_red;
+
 	//boss 이미지 좌표
-	int bossX = (SCREEN_WIDTH/2)-140;
-	int bossY = (SCREEN_HEIGHT/2)-200;
+	int bossX = (SCREEN_WIDTH/2)-300;
+	int bossY = (SCREEN_HEIGHT / 2) - 300;
+
+	//캐릭터 좌표
+	int x = SCREEN_WIDTH/2;
+	int y = (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/5);
+
+	//키보드 확인 여부
+	boolean KeyLeft = false;
+	boolean KeyRight = false;
+
+	//스레드
+	Thread th1;
 	
 	public BossMode() {
 		setUndecorated(true);
@@ -74,54 +84,69 @@ public class BossMode extends JFrame {
 		setVisible(true);
 		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
+		setFocusable(true);
 		
-		addKeyListener(new KeyAdapter() {	//키 이벤트
+		start();
+
+		//일시정지 버튼
+		stopJButton.setBounds(SCREEN_WIDTH - SCREEN_WIDTH / 13, 0, SCREEN_WIDTH / 13, SCREEN_WIDTH / 13);
+		stopJButton.setBorderPainted(false);
+		stopJButton.setContentAreaFilled(false);
+		stopJButton.setFocusPainted(false);
+		//일시정지 버튼 이벤트
+		stopJButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {	//키 눌렀을 때
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_LEFT:	//아래 방향키 눌렀을 때
-					red = redPressedButton;
-					if(boss == boss_red) {
-						boss_hp--;
-						boss = boss_heart;
-//						try {
-//							Thread.sleep(1000);
-//							boss = boss_red;
-//						}catch(InterruptedException e1) {
-//							boss = boss_red;
-//						}
-					}
-					break;
-				case KeyEvent.VK_DOWN:	//왼쪽 방향키 눌렀을 때
-					blue = bluePressedButton;
-					if(boss == boss_blue) boss_hp--;
-					break;
-				case KeyEvent.VK_RIGHT:	//오른쪽 방향키 눌렀을 때
-					//green = greenPressedButton;
-					System.exit(0);
-					if(boss == boss_green) boss_hp--;
-					break;
-				default:
-					break;
-				}
+			public void mouseEntered(MouseEvent e) {
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
-			public void keyReleased(KeyEvent e) {
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_LEFT:	//아래 방향키 뗐을 때
-					red = redButton;
-					break;
-				case KeyEvent.VK_DOWN:	//왼쪽 방향키 뗐을 때
-					blue = blueButton;
-					break;
-				case KeyEvent.VK_RIGHT:	//오른쪽 방향키 뗐을 때
-					green = greenButton;
-					break;
-				default:
-					break;
-				}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				new TyaGame();
 			}
 		});
-		if(boss_hp == 0) System.exit(0);
+		add(stopJButton);
+
+	}
+	
+	//키브도 눌렀을 때 이벤트 처리
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_LEFT:
+			KeyLeft = true;
+			break;
+		case KeyEvent.VK_RIGHT:
+			KeyRight = true;
+			break;
+		default:
+			break;
+		}
+	}
+
+	//키보드 뗐을 때 이벤트 처리
+	public void keyReleased(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_LEFT:
+			KeyLeft = false;
+			break;
+		case KeyEvent.VK_RIGHT:
+			KeyRight = false;
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void start() {
+		addKeyListener(this);
+		th1 = new Thread(this);
+		//스레드 실행
+		th1.start();	
 	}
 	
 	public void paint(Graphics g) {
@@ -130,16 +155,42 @@ public class BossMode extends JFrame {
 		screenGraphic = screenImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(screenImage, 0, 0, null);
-		g.drawImage(boss, (SCREEN_WIDTH/2)-140, (SCREEN_HEIGHT/2)-200, null);
-		g.drawImage(red, (SCREEN_WIDTH/4)-38, (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/5), null);
-		g.drawImage(blue, (SCREEN_WIDTH/2)-38, (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/5), null);
-		g.drawImage(green, (SCREEN_WIDTH/2)+(SCREEN_WIDTH/4)-38, (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/5), null);
+		g.drawImage(boss, bossX, bossY, null);
+		g.drawImage(player, x, y, this);
 	}
-	
+
 	public void screenDraw(Graphics g) {
 		g.drawImage(background_game, 0, 0, null);
 		paintComponents(g);
 		this.repaint();
 	}
 
+	//스레드 실행 함수
+	public void run() {
+		try {
+			while (true) {
+				KeyProcess();
+				repaint();
+				Thread.sleep(20);
+			}
+		} catch(Exception e) {}
+				
+	}
+
+	public void keyTyped(KeyEvent e) {}
+	
+	//키보드 움직임
+	public void KeyProcess() {
+		if (KeyLeft == true) {
+			if(x == (SCREEN_WIDTH/2)-(SCREEN_WIDTH/4)) {
+				KeyLeft = false;
+			} else x -= 10;
+		}
+		if (KeyRight == true) {
+			if(x == SCREEN_WIDTH-(SCREEN_WIDTH/4)) {
+				KeyRight = false;
+			} else x += 10;
+		}
+			
+	}
 }
