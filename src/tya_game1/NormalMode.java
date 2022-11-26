@@ -66,7 +66,7 @@ public class NormalMode extends JFrame {
 	private Image green = greenButton;
 	
 	//몬스터
-	Image[] po = new Image[7];
+	Image[] mon = new Image[7];
 	
 	//죽인 몬스터의 수 세기
 	int cnt_monster = 0;
@@ -80,9 +80,8 @@ public class NormalMode extends JFrame {
 		setLayout(null);
 		setFocusable(true);
 		
-		for(int i = 0; i<po.length; i++) {
-
-			 po[i] = new ImageIcon(Main.class.getResource("../images/Mon"+(i+1)+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+		for(int i = 0; i<mon.length; i++) {
+			mon[i] = new ImageIcon(Main.class.getResource("../images/Mon"+(i+1)+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
 		 }
 		
 		addKeyListener(new KeyAdapter() {   //키 이벤트
@@ -153,7 +152,7 @@ public class NormalMode extends JFrame {
 		g.drawImage(green, SCREEN_WIDTH/2-SCREEN_WIDTH/19, SCREEN_HEIGHT-SCREEN_HEIGHT/7, null);
 		g.drawImage(blue, SCREEN_WIDTH-SCREEN_WIDTH/5, SCREEN_HEIGHT-SCREEN_HEIGHT/7, null);
 		for(int i = 0; i<7; i++) {
-			g.drawImage(po[i], SCREEN_WIDTH/(i+1), SCREEN_HEIGHT/(i+6), null);
+			g.drawImage(mon[i], SCREEN_WIDTH/(i+1), SCREEN_HEIGHT/(i+6), null);
 		}
 	}
 	
