@@ -95,6 +95,11 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	private Image player_attack_img = new ImageIcon(Main.class.getResource("../images/back.png")).getImage();
 	ArrayList<PlayerAttack> player_attack_list = new ArrayList<PlayerAttack>();
 	private PlayerAttack player_attack;
+	
+	//보스 공격
+	private Image boss_attack_img = new ImageIcon(Main.class.getResource("../images/back.png")).getImage();
+	ArrayList<BossAttack> boss_attack_list = new ArrayList<BossAttack>();
+	private BossAttack boss_attack;
 
 	public BossMode() {
 		setUndecorated(true);
@@ -194,6 +199,10 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 			player_attack = player_attack_list.get(i);
 			g.drawImage(player_attack_img, player_attack.x, player_attack.y, null);
 		}
+		for(int i=0; i<boss_attack_list.size(); i++) {
+			boss_attack = boss_attack_list.get(i);
+			g.drawImage(boss_attack_img, boss_attack.x, boss_attack.y, null);
+		}
 	}
 
 	public void screenDraw(Graphics g) {
@@ -219,7 +228,8 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 					Thread.sleep(delay- System.currentTimeMillis()+pretime); 
 					cnt++;
 					KeyProcess();
-					AttackProcess();
+					PlayerAttackProcess();
+					BossAttackProcess();
 					//BossMove();	//좌우로 움직임 구현하기
 					repaint();
 				} catch (Exception e) { }
@@ -265,11 +275,24 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 
 	}
 
-	//공격 이벤트
-	private void AttackProcess() {
+	//플레이어 공격 이벤트
+	private void PlayerAttackProcess() {
 		for (int i = 0; i < player_attack_list.size(); i++) {
 			player_attack = player_attack_list.get(i);
 			player_attack.fire();
+		}
+	}
+	
+	//보스 공격 이벤트
+	private void BossAttackProcess() {
+		if(cnt % 50 == 0) {
+			boss_attack = new BossAttack(bossX, bossY);
+			boss_attack_list.add(boss_attack);
+		}
+		
+		for(int i=0; i<boss_attack_list.size(); i++) {
+			boss_attack = boss_attack_list.get(i);
+			boss_attack.fire();
 		}
 	}
 
