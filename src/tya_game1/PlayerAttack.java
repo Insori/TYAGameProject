@@ -1,11 +1,8 @@
 package tya_game1;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-
 public class PlayerAttack {
 	int x, y;
+	int attack = 5;
 	
 	public PlayerAttack(int x, int y) {
 		this.x = x;
@@ -13,7 +10,7 @@ public class PlayerAttack {
 	}
 	
 	public void fire() {
-		this.y -= 10;	//나중에 hp와 함께 조정
+		this.y -= 10;
 		
 	}
 }
