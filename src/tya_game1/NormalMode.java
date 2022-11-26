@@ -17,6 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class NormalMode extends JFrame {
 	
 	protected static int getScreenHeight() {
@@ -40,10 +43,18 @@ public class NormalMode extends JFrame {
 	private Image screenImage;
 	private Graphics screenGraphic;
 	
+	//필요한 이미지들 (배경 ,몬스터)
 	private Image background_game = new ImageIcon(Main.class.getResource("../images/background_game.jpg")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-//	private Image green_mon = new ImageIcon(Main.class.getResource("../images/GreenMon.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
-//	private Image blue_mon = new ImageIcon(Main.class.getResource("../images/BlueMon.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
-//	private Image red_mon = new ImageIcon(Main.class.getResource("../images/RedMon.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+	private Image Mon1 = new ImageIcon(Main.class.getResource("../images/Mon1.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+	private Image Mon2 = new ImageIcon(Main.class.getResource("../images/Mon2.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+	private Image Mon3 = new ImageIcon(Main.class.getResource("../images/Mon3.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+	private Image Mon4 = new ImageIcon(Main.class.getResource("../images/Mon4.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+	private Image Mon5 = new ImageIcon(Main.class.getResource("../images/Mon5.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+	private Image Mon6 = new ImageIcon(Main.class.getResource("../images/Mon6.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+	private Image Mon7 = new ImageIcon(Main.class.getResource("../images/Mon7.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+	
+	//타이머 이미지
+	private Image timer_image = new ImageIcon(Main.class.getResource("../images/timer_image.png")).getImage().getScaledInstance(SCREEN_WIDTH-SCREEN_WIDTH/6, SCREEN_HEIGHT/20, 0);
 	
 	//일시정지버튼 추가
 	private Image stop = new ImageIcon(Main.class.getResource("../images/stop.png")).getImage().getScaledInstance(SCREEN_WIDTH/16, SCREEN_WIDTH/16, 0);
@@ -68,8 +79,19 @@ public class NormalMode extends JFrame {
 	//몬스터
 	Image[] mon = new Image[7];
 	
+	//몬스터의 위치를 담고 있는 배열
+	private int position_x[] = new int [3];
+	private int position_y[] = new int [3];
+	
 	//죽인 몬스터의 수 세기
-	int cnt_monster = 0;
+	private int cnt_monster = 0;
+	
+	//몬스터의 유무
+	private int monster[] = new int [9];
+	
+	//타이머 100초부터 시작
+	private int timer_cnt = 100;
+	private int time = 0;
 	
 	public NormalMode() {
 		setUndecorated(true);
@@ -79,6 +101,25 @@ public class NormalMode extends JFrame {
 		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
 		setFocusable(true);
+		
+		//타이머 실행
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				if(timer_cnt==0) {
+					System.out.println("게임 오버");
+					time = timer_cnt;
+					timer.cancel();
+				}
+				timer_cnt--;
+			}
+		};timer.schedule(task, 1000, 1000);
+		
+		for(int i = 0; i<position_x.length; i++) {
+			position_x[i] = SCREEN_WIDTH/10+(SCREEN_HEIGHT/2+SCREEN_HEIGHT/8)*i;
+			position_y[i] =  SCREEN_HEIGHT/10+SCREEN_HEIGHT/30+(SCREEN_HEIGHT/3-SCREEN_WIDTH/20)*i;
+		}
 		
 		for(int i = 0; i<mon.length; i++) {
 			mon[i] = new ImageIcon(Main.class.getResource("../images/Mon"+(i+1)+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
@@ -118,7 +159,7 @@ public class NormalMode extends JFrame {
 	         }
 		});
 		
-		//돌아가기 버튼
+		//멈추기 버튼
 		stopJButton.setBounds(SCREEN_WIDTH-SCREEN_WIDTH/13, 0, SCREEN_WIDTH/13, SCREEN_WIDTH/13);
 		stopJButton.setBorderPainted(false);
 		stopJButton.setContentAreaFilled(false);
@@ -136,13 +177,13 @@ public class NormalMode extends JFrame {
 				public void mousePressed(MouseEvent e) {
 					new TyaGame();
 				}
-				});
-				add(stopJButton);
-		
+				});add(stopJButton);
 	}
-	
-	public void paint(Graphics g) {
-		//그리는 함수 
+
+
+
+	//그리는 함수
+	public void paint(Graphics g) { 
 		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
 		screenImage = createImage(SCREEN_WIDTH, SCREEN_HEIGHT);
 		screenGraphic = screenImage.getGraphics();
@@ -151,9 +192,13 @@ public class NormalMode extends JFrame {
 		g.drawImage(red, SCREEN_WIDTH/10, SCREEN_HEIGHT-SCREEN_HEIGHT/7, null);
 		g.drawImage(green, SCREEN_WIDTH/2-SCREEN_WIDTH/19, SCREEN_HEIGHT-SCREEN_HEIGHT/7, null);
 		g.drawImage(blue, SCREEN_WIDTH-SCREEN_WIDTH/5, SCREEN_HEIGHT-SCREEN_HEIGHT/7, null);
-		for(int i = 0; i<7; i++) {
-			g.drawImage(mon[i], SCREEN_WIDTH/(i+1), SCREEN_HEIGHT/(i+6), null);
-		}
+		g.drawImage(timer_image, SCREEN_WIDTH/12, SCREEN_HEIGHT/21, null);
+		
+		for(int i = 0; i<3; i++) {
+			for(int j = 0; j<3; j++) {
+				g.drawImage(Mon1, position_x[i], position_y[j], null);
+			}
+		}		
 	}
 	
 	public void screenDraw(Graphics g) {
