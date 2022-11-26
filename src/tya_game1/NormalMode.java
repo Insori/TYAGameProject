@@ -109,9 +109,9 @@ public class NormalMode extends JFrame {
 			public void run() {
 				if(timer_cnt==0) {
 					System.out.println("게임 오버");
-					time = timer_cnt;
 					timer.cancel();
 				}
+				time = timer_cnt;
 				timer_cnt--;
 			}
 		};timer.schedule(task, 1000, 1000);
