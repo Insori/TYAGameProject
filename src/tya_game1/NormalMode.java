@@ -119,7 +119,7 @@ public class NormalMode extends JFrame {
 		for(int i = 0; i<position_x.length; i++) {
 			position_x[i] = SCREEN_WIDTH/10+(SCREEN_HEIGHT/2+SCREEN_HEIGHT/8)*i;
 			position_y[i] =  SCREEN_HEIGHT/10+SCREEN_HEIGHT/30+(SCREEN_HEIGHT/3-SCREEN_WIDTH/20)*i;
-		}
+		} 
 		
 		for(int i = 0; i<mon.length; i++) {
 			mon[i] = new ImageIcon(Main.class.getResource("../images/Mon"+(i+1)+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
