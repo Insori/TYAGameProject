@@ -67,8 +67,6 @@ public class NormalMode extends JFrame {
 	
 	//몬스터
 	Image[] po = new Image[7];
-	ImageIcon[] position = new ImageIcon[7];
-	Image[] positions = new Image[7];
 	
 	//죽인 몬스터의 수 세기
 	int cnt_monster = 0;
@@ -82,7 +80,7 @@ public class NormalMode extends JFrame {
 		setLayout(null);
 		setFocusable(true);
 		
-		for(int i = 0; i<positions.length; i++) {
+		for(int i = 0; i<po.length; i++) {
 
 			 po[i] = new ImageIcon(Main.class.getResource("../images/Mon"+(i+1)+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
 		 }
