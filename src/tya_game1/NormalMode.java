@@ -108,11 +108,6 @@ public class NormalMode extends JFrame {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-				
-				if(timer_cnt%10==0) {
-					timer_image = new ImageIcon(Main.class.getResource("../images/timer_Image.png")).getImage().getScaledInstance(SCREEN_WIDTH-SCREEN_WIDTH/6-(SCREEN_WIDTH/12)*(10-timer_cnt/10)+1, SCREEN_HEIGHT/20, 0);
-					System.out.println("10초 지남");
-				}
 				if(timer_cnt==0) {
 					System.out.println("게임 오버");
 					new GameOver();
@@ -122,6 +117,8 @@ public class NormalMode extends JFrame {
 				if(cnt_monster >30) new BossMode();
 				time = timer_cnt;
 				timer_cnt--;
+				timer_image = new ImageIcon(Main.class.getResource("../images/timer_Image.png")).getImage().getScaledInstance(SCREEN_WIDTH-SCREEN_WIDTH/6-(SCREEN_WIDTH/120)*(100-timer_cnt)+1, SCREEN_HEIGHT/20, 0);
+				
 			}
 		};timer.schedule(task, 1000, 1000);
 		
@@ -130,7 +127,7 @@ public class NormalMode extends JFrame {
 			position_y[i] =  SCREEN_HEIGHT/10+SCREEN_HEIGHT/30+(SCREEN_HEIGHT/3-SCREEN_WIDTH/20)*i;
 		} 
 
-		double r;
+		double r = 0;
 		int a ;
 		//몬스터 이미지 넣어주기
 		for(int i = 0; i<mon.length; i++) {
@@ -138,6 +135,14 @@ public class NormalMode extends JFrame {
 			a = (int)(r*7)+1;
 			mon[i] = new ImageIcon(Main.class.getResource("../images/Mon"+a+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
 		 }
+		for(int i = 0; i<monster.length; i++) {
+			for(int j = 0; j<monster[i].length; j++) {
+
+				r = Math.random();
+				a = (int)(r*2);
+				monster[i][j] = a;
+			}
+		}
 		
 		addKeyListener(new KeyAdapter() {   //키 이벤트
 	         @Override
@@ -210,12 +215,12 @@ public class NormalMode extends JFrame {
 		g.drawImage(timer_image, SCREEN_WIDTH/12, SCREEN_HEIGHT/21, null);
 		
 		int a = 0;
-		for(int i = 0; i<3; i++) {
-			for(int j = 0; j<3; j++) {
-				g.drawImage(mon[a], position_x[i], position_y[j], null);
+		for(int i = 0; i<monster.length; i++) {
+			for(int j = 0; j<monster[i].length; j++) {
+				if(monster[i][j]==1) g.drawImage(mon[a], position_x[i], position_y[j], null);
 				a++;
 			}
-		}		
+		}
 	}
 	
 	public void screenDraw(Graphics g) {
