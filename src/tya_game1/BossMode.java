@@ -70,6 +70,8 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	int boss_hp = 100;
 	// 보스 기본 이미지 설정
 	private Image boss_img = boss_pink;
+	// 보스 이동 속도
+	int speed = 10;
 
 	// 플레이어 이미지
 	private Image player = new ImageIcon(Main.class.getResource("../images/player.png")).getImage();
@@ -246,23 +248,29 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 						KeyProcess();
 						PlayerAttackProcess();
 						BossAttackProcess();
-						// BossMove(); // 좌우로 움직임 구현하기
+						BossMove();
 						repaint();
 					} catch (Exception e) {
 					}
 				}
 			}
 			try {
-				Thread.sleep(100);
+				Thread.sleep(5000);
 			} catch (Exception e) {
 			}
 		}
 	}
 
 	// 보스 움직임
-//	public void BossMove() {
-//		for(int i=0; i<)
-//	}
+	public void BossMove() {
+		bossX += speed;
+		if (bossX+boss_width > SCREEN_WIDTH) {
+			speed *= -1;
+		} else if (bossX < 0) {
+			speed *= -1;
+		}
+
+	}
 
 	// 키보드 타이핑 이벤트
 	public void keyTyped(KeyEvent e) {
@@ -270,11 +278,11 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 
 	// 키보드 움직임 이벤트
 	public void KeyProcess() {
-		if (KeyLeft && playerX - 10 > (SCREEN_WIDTH/2)-(SCREEN_WIDTH/4))
-			playerX -= 10;
-		if (KeyRight && playerX + player_width + 10 < (SCREEN_WIDTH/2) + (SCREEN_WIDTH/4))
-			playerX += 10;
-		if (shooting == true && cnt % 5 == 0) {
+		if (KeyLeft && playerX - 10 > (SCREEN_WIDTH / 2) - (SCREEN_WIDTH / 4))
+			playerX -= 12;
+		if (KeyRight && playerX + player_width + 10 < (SCREEN_WIDTH / 2) + (SCREEN_WIDTH / 4))
+			playerX += 12;
+		if (shooting == true && cnt % 10 == 0) {
 			player_attack = new PlayerAttack(playerX + 45, playerY - 120);
 			player_attack_list.add(player_attack);
 		}
@@ -304,7 +312,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 
 	// 보스 공격 이벤트
 	public void BossAttackProcess() {
-		if (cnt % 50 == 0) {
+		if (cnt % 30 == 0) {
 			boss_attack = new BossAttack(bossX + 70, bossY + 130);
 			boss_attack_list.add(boss_attack);
 		}
