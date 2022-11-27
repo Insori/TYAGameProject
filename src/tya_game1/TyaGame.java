@@ -62,7 +62,6 @@ public class TyaGame extends JFrame {
 		setTitle("TYA Game");
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		setLocationRelativeTo(null);	//화면의 위치가 가운데로 옴.
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창을 닫으면 프로세스도 종료
 		setVisible(true);
 		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
