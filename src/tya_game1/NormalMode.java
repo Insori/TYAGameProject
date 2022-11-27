@@ -78,7 +78,7 @@ public class NormalMode extends JFrame {
 	private Image green = greenButton;
 	
 	//몬스터
-	Image[] mon = new Image[7];
+	Image[] mon = new Image[9];
 	
 	//몬스터의 위치를 담고 있는 배열
 	private int position_x[] = new int [3];
@@ -88,7 +88,7 @@ public class NormalMode extends JFrame {
 	private int cnt_monster = 0;
 	
 	//몬스터의 유무
-	private int monster[] = new int [9];
+	private int monster[][] = new int [3][3];
 	
 	//타이머 100초부터 시작
 	private int timer_cnt = 100;
@@ -129,9 +129,14 @@ public class NormalMode extends JFrame {
 			position_x[i] = SCREEN_WIDTH/10+(SCREEN_HEIGHT/2+SCREEN_HEIGHT/8)*i;
 			position_y[i] =  SCREEN_HEIGHT/10+SCREEN_HEIGHT/30+(SCREEN_HEIGHT/3-SCREEN_WIDTH/20)*i;
 		} 
-		
+
+		double r;
+		int a ;
+		//몬스터 이미지 넣어주기
 		for(int i = 0; i<mon.length; i++) {
-			mon[i] = new ImageIcon(Main.class.getResource("../images/Mon"+(i+1)+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+			r = Math.random();
+			a = (int)(r*7)+1;
+			mon[i] = new ImageIcon(Main.class.getResource("../images/Mon"+a+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
 		 }
 		
 		addKeyListener(new KeyAdapter() {   //키 이벤트
@@ -204,9 +209,11 @@ public class NormalMode extends JFrame {
 		g.drawImage(timer_back_image, SCREEN_WIDTH/12, SCREEN_HEIGHT/21, null);
 		g.drawImage(timer_image, SCREEN_WIDTH/12, SCREEN_HEIGHT/21, null);
 		
+		int a = 0;
 		for(int i = 0; i<3; i++) {
 			for(int j = 0; j<3; j++) {
-				g.drawImage(Mon1, position_x[i], position_y[j], null);
+				g.drawImage(mon[a], position_x[i], position_y[j], null);
+				a++;
 			}
 		}		
 	}
