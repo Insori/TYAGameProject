@@ -93,6 +93,9 @@ public class NormalMode extends JFrame {
 	//타이머 100초부터 시작
 	private int timer_cnt = 100;
 	private int time = 0;
+
+	//몬스터를 위한 변수
+	int i1 = 2;
 	
 	public NormalMode() {
 		setUndecorated(true);
@@ -102,6 +105,7 @@ public class NormalMode extends JFrame {
 		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
 		setFocusable(true);
+		
 		
 		//타이머 실행
 		Timer timer = new Timer();
@@ -114,7 +118,7 @@ public class NormalMode extends JFrame {
 					timer.cancel();
 				}
 
-				if(cnt_monster >30) new BossMode();
+				if(cnt_monster >2) new BossMode();
 				time = timer_cnt;
 				timer_cnt--;
 				timer_image = new ImageIcon(Main.class.getResource("../images/timer_Image.png")).getImage().getScaledInstance(SCREEN_WIDTH-SCREEN_WIDTH/6-(SCREEN_WIDTH/120)*(100-timer_cnt)+1, SCREEN_HEIGHT/20, 0);
@@ -126,50 +130,64 @@ public class NormalMode extends JFrame {
 			position_x[i] = SCREEN_WIDTH/10+(SCREEN_HEIGHT/2+SCREEN_HEIGHT/8)*i;
 			position_y[i] =  SCREEN_HEIGHT/10+SCREEN_HEIGHT/30+(SCREEN_HEIGHT/3-SCREEN_WIDTH/20)*i;
 		} 
-
-		double r = 0;
-		int a ;
-		//몬스터 이미지 넣어주기
-		for(int i = 0; i<mon.length; i++) {
-			r = Math.random();
-			a = (int)(r*7)+1;
-			mon[i] = new ImageIcon(Main.class.getResource("../images/Mon"+a+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
-		 }
+		
+		//새로운 몬스터 배열을 만드는 코드 
+		int cnt = 9;
 		for(int i = 0; i<monster.length; i++) {
-			for(int j = 0; j<monster[i].length; j++) {
-
-				r = Math.random();
-				a = (int)(r*2);
-				monster[i][j] = a;
+			for(int j = 0; j<monster[i].length;j++) {
+				if(monster[i][j]==0) {cnt--;
 			}
 		}
-		
+		if(cnt==0) make_monster();
+
 		addKeyListener(new KeyAdapter() {   //키 이벤트
 	         @Override
 	         public void keyPressed(KeyEvent e) {   //키 눌렀을 때
+	        	 if(i1<0) make_monster();
 	            switch (e.getKeyCode()) {
-	            case KeyEvent.VK_LEFT:   //아래 방향키 눌렀을 때
+	            case KeyEvent.VK_LEFT:   //왼쪽 방향키 눌렀을 때
+	            	if(monster[i1][0]==1) {
+    					monster[i1][0] = 0;
+    					cnt_monster++;
+    				}		
+	            	else timer_cnt--;
 	            	red = redPressedButton;
 	               break;
-	            case KeyEvent.VK_DOWN:   //왼쪽 방향키 눌렀을 때
+	            case KeyEvent.VK_DOWN:   //아래 방향키 눌렀을 때
+	            	if(monster[i1][1]==1) {
+    					monster[i1][1] = 0;
+    					cnt_monster++;
+    				}		
+	            	else timer_cnt--;
 	            	green = greenPressedButton;
 	               break;
 	            case KeyEvent.VK_RIGHT:   //오른쪽 방향키 눌렀을 때
+	            	if(monster[i1][2]==1) {
+    					monster[i1][2] = 0;
+    					cnt_monster++;
+    				}		
+	            	else timer_cnt--;
 		            blue = bluePressedButton;
 	               break;
 	            default:
 	               break;
 	            }
+	            System.out.println(cnt_monster+"\n");
+	        	 if(monster[i1][0]==0&&monster[i1][1]==0&&monster[i1][2]==0) i1--;
+	            if(cnt_monster>=20) {
+	        		new BossMode();
+	        		setVisible(false);
+	            }
 	         }
 	         public void keyReleased(KeyEvent e) {
 	        	 switch(e.getKeyCode()) {
-	        	 case KeyEvent.VK_LEFT:   //아래 방향키 눌렀을 때
+	        	 case KeyEvent.VK_LEFT:   //왼쪽 방향키 떼졌을 때
 	        		 red = redButton;
 	        		 break;
-	        	 case KeyEvent.VK_DOWN:   //왼쪽 방향키 눌렀을 때
+	        	 case KeyEvent.VK_DOWN:   //아래 방향키 떼졌을 때
 	        		 green = greenButton;
 	        		 break;
-	        	 case KeyEvent.VK_RIGHT:   //오른쪽 방향키 눌렀을 때
+	        	 case KeyEvent.VK_RIGHT:   //오른쪽 방향키 떼졌을 때
 	        		 blue = blueButton;
 	        		 break;
 	        	 default:
@@ -195,11 +213,31 @@ public class NormalMode extends JFrame {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					new TyaGame();
+					setVisible(false);
 				}
 				});add(stopJButton);
+		}
 	}
+	
+	//몬스터 배열을 만드는 함수
+	void make_monster() {
+		double r = 0;
+		int a ;
+		//몬스터 이미지 넣어주기
+		for(int i = 0; i<mon.length; i++) {
+			r = Math.random();
+			a = (int)(r*7)+1;
+			mon[i] = new ImageIcon(Main.class.getResource("../images/Mon"+a+".png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
+		 }
+		for(int i = 0; i<monster.length; i++) {
+			for(int j = 0; j<monster[i].length; j++) {
 
-
+				r = Math.random();
+				a = (int)(r*2);
+				monster[i][j] = a;
+			}
+		}
+	}
 
 	//그리는 함수
 	public void paint(Graphics g) { 
@@ -215,9 +253,12 @@ public class NormalMode extends JFrame {
 		g.drawImage(timer_image, SCREEN_WIDTH/12, SCREEN_HEIGHT/21, null);
 		
 		int a = 0;
+		//몬스터가 있으면 그리기
 		for(int i = 0; i<monster.length; i++) {
 			for(int j = 0; j<monster[i].length; j++) {
-				if(monster[i][j]==1) g.drawImage(mon[a], position_x[i], position_y[j], null);
+				if(monster[i][j]==1) {
+					g.drawImage(mon[a], position_x[i], position_y[j], null);
+				}
 				a++;
 			}
 		}
