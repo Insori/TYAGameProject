@@ -55,8 +55,9 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	// 보스 이미지
 	private Image boss_pink = new ImageIcon(Main.class.getResource("../images/boss_pink.png")).getImage();
 	private Image boss_heart = new ImageIcon(Main.class.getResource("../images/boss_heart.png")).getImage();
+	private Image boss_over = new ImageIcon(Main.class.getResource("../images/boss_over.png")).getImage();
 	// 보스 이미지 좌표
-	int bossX = (SCREEN_WIDTH / 2) - 125;
+	int bossX = (SCREEN_WIDTH/2)-(SCREEN_WIDTH/4);	//(SCREEN_WIDTH / 2) - 125;
 	int bossY = (SCREEN_HEIGHT / 2) - 300;
 	// 보스 가로, 세로
 	int boss_width = 250;
@@ -258,39 +259,28 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		}
 	}
 
-	public void LeftMove() {
-		while(LeftLine() == false) {
-			bossX -= 10;
-		}
-		RightMove();
-	}
-
-	public void RightMove() {
-		while(RightLine() == false) {
-			bossX += 10;
-		}
-		LeftMove();
-	}
-
-	public boolean LeftLine() {
-		if(bossX == (SCREEN_WIDTH/2)-(SCREEN_WIDTH/4)) return true;
-		else return false;
-	}
-
-	public boolean RightLine() {
-		if(bossX == (SCREEN_WIDTH/2)+(SCREEN_WIDTH/4)) return true;
-		else return true;
-	}
-
+//	public void LeftMove() {
+//		bossX -= 10;
+//	}
+//
+//	public void RightMove() {
+//		bossX += 10;
+//	}
+	
 	// 보스 움직임
 	public void BossMove() {
-		LeftMove();
-		RightMove();
+		if(bossX == (SCREEN_WIDTH/2)-(SCREEN_WIDTH/4)) {
+			while(bossX != (SCREEN_WIDTH/2)+(SCREEN_WIDTH/4))
+				bossX += 10;
+		}
+		else if(bossX == (SCREEN_WIDTH/2)+(SCREEN_WIDTH/4)) {
+			while(bossX != (SCREEN_WIDTH/2)+(SCREEN_WIDTH/4))
+				bossX -= 10;
+		}
 	}
 
 	// 키보드 타이핑 이벤트
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) { }
 
 	// 키보드 움직임 이벤트
 	public void KeyProcess() {
@@ -298,13 +288,13 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 			if (playerX == (SCREEN_WIDTH / 2) - (SCREEN_WIDTH / 4)) {
 				KeyLeft = false;
 			} else
-				playerX -= 10;
+				playerX -= 13;
 		}
 		if (KeyRight == true) {
 			if (playerX == SCREEN_WIDTH - (SCREEN_WIDTH / 4)) {
 				KeyRight = false;
 			} else
-				playerX += 10;
+				playerX += 13;
 		}
 		if (shooting == true && cnt % 5 == 0) {
 			player_attack = new PlayerAttack(playerX + 45, playerY - 120);
@@ -320,13 +310,13 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 			player_attack.fire();
 
 			if (player_attack.x > (bossX - 85) && player_attack.x < bossX + 190 && player_attack.y > bossY
-					&& player_attack.y < bossY + 95) {
+					&& player_attack.y < bossY+170) {
 				boss_hp -= player_attack.attack;
 
 				player_attack_list.remove(player_attack);
 			}
 			if (boss_hp <= 0) {
-				// 보스 사라지기
+				boss_img = boss_over;
 				// 랭킹 화면으로 넘어가기
 			}
 
@@ -345,7 +335,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 			boss_attack.fire();
 
 			if (boss_attack.x > (playerX - 70) && boss_attack.x < (playerX + player_width+30)
-					&& boss_attack.y > (playerY - 200) && boss_attack.y < playerY + player_height) {
+					&& boss_attack.y > (playerY - 190) && boss_attack.y < playerY + 50) {
 				player_hp -= boss_attack.attack;
 				boss_attack_list.remove(boss_attack);
 			}
