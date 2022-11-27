@@ -135,17 +135,14 @@ public class NormalMode extends JFrame {
 					new GameOver();
 					timer.cancel();
 				}
-				if (cnt_monster>20) {
+				if (cnt_monster>70) {
 					new BossMode();
 					setVisible(false);
 					timer.cancel();
 				}
 				time = timer_cnt;
 				timer_cnt--;
-				timer_image = new ImageIcon(Main.class.getResource("../images/timer_Image.png")).getImage()
-						.getScaledInstance(
-								SCREEN_WIDTH - SCREEN_WIDTH / 6 - (SCREEN_WIDTH / 120) * (100 - timer_cnt) + 1,
-								SCREEN_HEIGHT / 20, 0);
+				timer_image = new ImageIcon(Main.class.getResource("../images/timer_Image.png")).getImage().getScaledInstance(SCREEN_WIDTH - SCREEN_WIDTH / 6 - (SCREEN_WIDTH / 120) * (100 - timer_cnt) + 1,SCREEN_HEIGHT / 20, 0);
 
 			}
 		};
