@@ -56,8 +56,8 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	private Image boss_pink = new ImageIcon(Main.class.getResource("../images/boss_pink.png")).getImage();
 	private Image boss_heart = new ImageIcon(Main.class.getResource("../images/boss_heart.png")).getImage();
 	// 보스 이미지 좌표
-	int bossX = (SCREEN_WIDTH / 2)-125;
-	int bossY = (SCREEN_HEIGHT / 2) - 250;
+	int bossX = (SCREEN_WIDTH / 2) - 125;
+	int bossY = (SCREEN_HEIGHT / 2) - 300;
 	// 보스 가로, 세로
 	int boss_width = 250;
 	int boss_height = 186;
@@ -70,16 +70,16 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	// 보스 기본 이미지 설정
 	private Image boss_img = boss_pink;
 
-	// 플레이어 이미지(대체)
-	private Image player = new ImageIcon(Main.class.getResource("../images/button_red.png")).getImage();
+	// 플레이어 이미지
+	private Image player = new ImageIcon(Main.class.getResource("../images/player.png")).getImage();
 	// 플레이어 좌표
-	int playerX = (SCREEN_WIDTH / 2)-48;
-	int playerY = (SCREEN_HEIGHT / 2) + (SCREEN_HEIGHT / 3);
+	int playerX = (SCREEN_WIDTH / 2) - 48;
+	int playerY = (SCREEN_HEIGHT / 2) + (SCREEN_HEIGHT / 3) + 10;
 	// 플레이어 가로, 세로 - 조정
 	int player_width = 96;
 	int player_height = 96;
 	// 플레이어 체력
-	int player_hp = 100;
+	int player_hp = 50;
 	// 플레이어 공격
 	private Image player_attack_img = new ImageIcon(Main.class.getResource("../images/player_attack.png")).getImage();
 	ArrayList<PlayerAttack> player_attack_list = new ArrayList<PlayerAttack>();
@@ -206,7 +206,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		g.drawImage(player, playerX, playerY, null);
 		// 플레이어 체력바 그리기
 		g.setColor(Color.GREEN);
-		g.fillRect(playerX - 20, playerY - 20, player_hp * 2, 10);
+		g.fillRect(playerX + 20, playerY - 20, player_hp * 3, 10);
 		// 플레이어 공격 그리기
 		for (int i = 0; i < player_attack_list.size(); i++) {
 			player_attack = player_attack_list.get(i);
@@ -245,7 +245,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 						KeyProcess();
 						PlayerAttackProcess();
 						BossAttackProcess();
-						//BossMove(); //좌우로 움직임 구현하기
+						//BossMove(); // 좌우로 움직임 구현하기
 						repaint();
 					} catch (Exception e) {
 					}
@@ -258,15 +258,35 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		}
 	}
 
+	public void LeftMove() {
+		while(LeftLine() == false) {
+			bossX -= 10;
+		}
+		RightMove();
+	}
+
+	public void RightMove() {
+		while(RightLine() == false) {
+			bossX += 10;
+		}
+		LeftMove();
+	}
+
+	public boolean LeftLine() {
+		if(bossX == (SCREEN_WIDTH/2)-(SCREEN_WIDTH/4)) return true;
+		else return false;
+	}
+
+	public boolean RightLine() {
+		if(bossX == (SCREEN_WIDTH/2)+(SCREEN_WIDTH/4)) return true;
+		else return true;
+	}
+
 	// 보스 움직임
-//	public void BossMove() {
-//		int m = 10;
-//		bossX = bossX + m;
-//		if (bossX == (SCREEN_WIDTH / 2) - (SCREEN_WIDTH/4) || bossX == SCREEN_WIDTH - (SCREEN_WIDTH / 4)) {
-//			m = m * (-1);
-//		}
-//
-//	}
+	public void BossMove() {
+		LeftMove();
+		RightMove();
+	}
 
 	// 키보드 타이핑 이벤트
 	public void keyTyped(KeyEvent e) {
@@ -287,7 +307,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 				playerX += 10;
 		}
 		if (shooting == true && cnt % 5 == 0) {
-			player_attack = new PlayerAttack(playerX - 10, playerY - 120); // 이미지에 따라 조정
+			player_attack = new PlayerAttack(playerX + 45, playerY - 120);
 			player_attack_list.add(player_attack);
 		}
 
@@ -299,10 +319,10 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 			player_attack = player_attack_list.get(i);
 			player_attack.fire();
 
-			//좌표 이상함
-			if (player_attack.x > (bossX-95) && player_attack.x < bossX + 180 && player_attack.y > bossY
+			if (player_attack.x > (bossX - 85) && player_attack.x < bossX + 190 && player_attack.y > bossY
 					&& player_attack.y < bossY + 95) {
 				boss_hp -= player_attack.attack;
+
 				player_attack_list.remove(player_attack);
 			}
 			if (boss_hp <= 0) {
@@ -316,7 +336,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	// 보스 공격 이벤트
 	public void BossAttackProcess() {
 		if (cnt % 50 == 0) {
-			boss_attack = new BossAttack(bossX+70, bossY + 130);
+			boss_attack = new BossAttack(bossX + 70, bossY + 130);
 			boss_attack_list.add(boss_attack);
 		}
 
@@ -324,13 +344,13 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 			boss_attack = boss_attack_list.get(i);
 			boss_attack.fire();
 
-			if (boss_attack.x > (playerX-50) && boss_attack.x < (playerX + player_width-50) && boss_attack.y > (playerY-200)
-					&& boss_attack.y < playerY + player_height) {
+			if (boss_attack.x > (playerX - 70) && boss_attack.x < (playerX + player_width+30)
+					&& boss_attack.y > (playerY - 200) && boss_attack.y < playerY + player_height) {
 				player_hp -= boss_attack.attack;
 				boss_attack_list.remove(boss_attack);
 			}
 			if (player_hp <= 0) {
-				gameover = true;
+				// gameover = true;
 			}
 		}
 	}
