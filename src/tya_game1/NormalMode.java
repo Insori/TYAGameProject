@@ -54,6 +54,7 @@ public class NormalMode extends JFrame {
 	private Image Mon7 = new ImageIcon(Main.class.getResource("../images/Mon7.png")).getImage().getScaledInstance(SCREEN_WIDTH/10, SCREEN_WIDTH/10, 0);
 	
 	//타이머 이미지
+	private Image timer_back_image = new ImageIcon(Main.class.getResource("../images/timer_back_image.png")).getImage().getScaledInstance(SCREEN_WIDTH-SCREEN_WIDTH/6, SCREEN_HEIGHT/20, 0);
 	private Image timer_image = new ImageIcon(Main.class.getResource("../images/timer_image.png")).getImage().getScaledInstance(SCREEN_WIDTH-SCREEN_WIDTH/6, SCREEN_HEIGHT/20, 0);
 	
 	//일시정지버튼 추가
@@ -107,10 +108,18 @@ public class NormalMode extends JFrame {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
+				
+				if(timer_cnt%10==0) {
+					timer_image = new ImageIcon(Main.class.getResource("../images/timer_Image.png")).getImage().getScaledInstance(SCREEN_WIDTH-SCREEN_WIDTH/6-(SCREEN_WIDTH/12)*(10-timer_cnt/10)+1, SCREEN_HEIGHT/20, 0);
+					System.out.println("10초 지남");
+				}
 				if(timer_cnt==0) {
 					System.out.println("게임 오버");
+					new GameOver();
 					timer.cancel();
 				}
+
+				if(cnt_monster >30) new BossMode();
 				time = timer_cnt;
 				timer_cnt--;
 			}
@@ -192,6 +201,7 @@ public class NormalMode extends JFrame {
 		g.drawImage(red, SCREEN_WIDTH/10, SCREEN_HEIGHT-SCREEN_HEIGHT/7, null);
 		g.drawImage(green, SCREEN_WIDTH/2-SCREEN_WIDTH/19, SCREEN_HEIGHT-SCREEN_HEIGHT/7, null);
 		g.drawImage(blue, SCREEN_WIDTH-SCREEN_WIDTH/5, SCREEN_HEIGHT-SCREEN_HEIGHT/7, null);
+		g.drawImage(timer_back_image, SCREEN_WIDTH/12, SCREEN_HEIGHT/21, null);
 		g.drawImage(timer_image, SCREEN_WIDTH/12, SCREEN_HEIGHT/21, null);
 		
 		for(int i = 0; i<3; i++) {
