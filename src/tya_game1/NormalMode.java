@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -129,14 +130,16 @@ public class NormalMode extends JFrame {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-				if (timer_cnt == 0) {
+				if (timer_cnt < 0) {
 					System.out.println("게임 오버");
 					new GameOver();
 					timer.cancel();
 				}
-
-				if (cnt_monster > 2)
+				if (cnt_monster>20) {
 					new BossMode();
+					setVisible(false);
+					timer.cancel();
+				}
 				time = timer_cnt;
 				timer_cnt--;
 				timer_image = new ImageIcon(Main.class.getResource("../images/timer_Image.png")).getImage()
@@ -153,16 +156,7 @@ public class NormalMode extends JFrame {
 			position_y[i] = SCREEN_HEIGHT / 10 + SCREEN_HEIGHT / 30 + (SCREEN_HEIGHT / 3 - SCREEN_WIDTH / 20) * i;
 		}
 
-		// 새로운 몬스터 배열을 만드는 코드
-		int cnt = 9;
-		for (int i = 0; i < monster.length; i++) {
-			for (int j = 0; j < monster[i].length; j++) {
-				if (monster[i][j] == 0) {
-					cnt--;
-				}
-			}
-			if (cnt == 0)
-				make_monster();
+		make_monster();
 
 			addKeyListener(new KeyAdapter() { // 키 이벤트
 				@Override
@@ -171,24 +165,26 @@ public class NormalMode extends JFrame {
 						make_monster();
 					switch (e.getKeyCode()) {
 					case KeyEvent.VK_LEFT: // 아래 방향키 눌렀을 때
-						if (monster[i1][0] == 1) {
-							monster[i1][0] = 0;
+						if (monster[0][i1] == 1) {
+							monster[0][i1] = 0;
+							System.out.println("왼쪽 : 0, "+i1);
 							cnt_monster++;
 						} else
 							timer_cnt--;
 						red = redPressedButton;
 						break;
 					case KeyEvent.VK_DOWN: // 왼쪽 방향키 눌렀을 때
-						if (monster[i1][1] == 1) {
-							monster[i1][1] = 0;
+						if (monster[1][i1] == 1) {
+							monster[1][i1] = 0;
 							cnt_monster++;
-						} else
+							}
+						else
 							timer_cnt--;
 						green = greenPressedButton;
 						break;
 					case KeyEvent.VK_RIGHT: // 오른쪽 방향키 눌렀을 때
-						if (monster[i1][2] == 1) {
-							monster[i1][2] = 0;
+						if (monster[2][i1] == 1) {
+							monster[2][i1] = 0;
 							cnt_monster++;
 						} else
 							timer_cnt--;
@@ -198,8 +194,12 @@ public class NormalMode extends JFrame {
 						break;
 					}
 					System.out.println(cnt_monster + "\n");
-					if (monster[i1][0] == 0 && monster[i1][1] == 0 && monster[i1][2] == 0)
-						i1--;
+					if (monster[0][i1] == 0 && monster[1][i1] == 0 && monster[2][i1] == 0 && i1>0) i1--;
+					if(monster[0][0]==0&& monster[0][1]==0 && monster[0][2]==0&&monster[1][0]==0&&monster[1][1]==0&&monster[1][2]==0&&monster[2][0]==0&&monster[2][1]==0&&monster[2][2]==0) {
+						make_monster();
+						i1 = 2;
+					}
+					
 				}
 
 				public void keyReleased(KeyEvent e) {
@@ -242,7 +242,6 @@ public class NormalMode extends JFrame {
 				}
 			});
 			add(stopJButton);
-		}
 		if (cnt_monster >= 20) {
 			new BossMode();
 			setVisible(false);
