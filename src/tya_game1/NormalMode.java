@@ -146,24 +146,24 @@ public class NormalMode extends JFrame {
 	        	 if(i1<0) make_monster();
 	            switch (e.getKeyCode()) {
 	            case KeyEvent.VK_LEFT:   //왼쪽 방향키 눌렀을 때
-	            	if(monster[i1][0]==1) {
-    					monster[i1][0] = 0;
+	            	if(monster[0][i1]==1) {
+    					monster[0][i1] = 0;
     					cnt_monster++;
     				}		
 	            	else timer_cnt--;
 	            	red = redPressedButton;
 	               break;
 	            case KeyEvent.VK_DOWN:   //아래 방향키 눌렀을 때
-	            	if(monster[i1][1]==1) {
-    					monster[i1][1] = 0;
+	            	if(monster[1][i1]==1) {
+    					monster[1][i1] = 0;
     					cnt_monster++;
     				}		
 	            	else timer_cnt--;
 	            	green = greenPressedButton;
 	               break;
 	            case KeyEvent.VK_RIGHT:   //오른쪽 방향키 눌렀을 때
-	            	if(monster[i1][2]==1) {
-    					monster[i1][2] = 0;
+	            	if(monster[2][i1]==1) {
+    					monster[2][i1] = 0;
     					cnt_monster++;
     				}		
 	            	else timer_cnt--;
