@@ -129,6 +129,11 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 					time = timer_cnt;
 					timer.cancel();
 				}
+				if(boss_hp<=0) {
+					new Ranking();
+					setVisible(false);
+					timer.cancel();
+				}
 				timer_cnt--;
 			}
 		};
@@ -303,8 +308,6 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 			}
 			if (boss_hp <= 0) {
 				boss_img = boss_over;
-//				new Ranking();
-//				setVisible(false);
 			}
 
 		}
