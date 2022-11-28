@@ -5,11 +5,24 @@ import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 
 public class Ranking extends JFrame {
+
+	JTextField name,age;//클래스 변수로 선언
+	
+	ConnectionTest db = new ConnectionTest();
+	
 	protected static int getScreenHeight() {
 		 try {
 		  return Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -33,12 +46,51 @@ public class Ranking extends JFrame {
 	private Image background = new ImageIcon(Main.class.getResource("../images/background_ranking.jpg")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0); //배경 이미지 크기 변경
 
 	public Ranking() {
+
+		JPanel panel1 = new JPanel();
+		panel1.add(new JLabel("  이름 :"));
+		name=new JTextField(20);
+		panel1.add(name);
+		
+		JPanel panel2 = new JPanel();
+		panel2.add(new JLabel("  나이 :"));
+		age =new JTextField(3);
+		panel2.add(age);
+
+		this.add(panel1);
+		
+		this.add(panel1);
+		add(panel2);
+		JButton button = new JButton("확인");
+		panel1.add(button);
+		//버튼 리스너 연결
+		button.addActionListener(new Listener(this));
+		
 		setUndecorated(true);
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
+	}
+	
+	class Listener implements ActionListener{
+		JFrame frame;
+		public Listener(JFrame f){
+			frame =f;
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			//버튼을 누르면 이쪽으로 제어가 이동
+			System.out.println(arg0.getActionCommand());
+			String n =name.getText();
+			System.out.println(n);
+			String a =age.getText();
+			System.out.println(a);
+			
+			//다이얼로그
+			JOptionPane.showMessageDialog(frame, n+a);
+		}
 	}
 	
 	public void paint(Graphics g) {
@@ -55,5 +107,4 @@ public class Ranking extends JFrame {
 		paintComponents(g);
 		this.repaint();
 	}
-
 }

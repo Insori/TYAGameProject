@@ -135,7 +135,7 @@ public class NormalMode extends JFrame {
 					new GameOver();
 					timer.cancel();
 				}
-				if (cnt_monster>70) {
+				if (cnt_monster>70&& i1==0) {
 					new BossMode();
 					setVisible(false);
 					timer.cancel();
@@ -155,6 +155,7 @@ public class NormalMode extends JFrame {
 
 		make_monster();
 
+
 			addKeyListener(new KeyAdapter() { // 키 이벤트
 				@Override
 				public void keyPressed(KeyEvent e) { // 키 눌렀을 때
@@ -164,7 +165,6 @@ public class NormalMode extends JFrame {
 					case KeyEvent.VK_LEFT: // 아래 방향키 눌렀을 때
 						if (monster[0][i1] == 1) {
 							monster[0][i1] = 0;
-							System.out.println("왼쪽 : 0, "+i1);
 							cnt_monster++;
 						} else
 							timer_cnt--;
@@ -190,12 +190,11 @@ public class NormalMode extends JFrame {
 					default:
 						break;
 					}
-					System.out.println(cnt_monster + "\n");
-					if (monster[0][i1] == 0 && monster[1][i1] == 0 && monster[2][i1] == 0 && i1>0) i1--;
 					if(monster[0][0]==0&& monster[0][1]==0 && monster[0][2]==0&&monster[1][0]==0&&monster[1][1]==0&&monster[1][2]==0&&monster[2][0]==0&&monster[2][1]==0&&monster[2][2]==0) {
 						make_monster();
 						i1 = 2;
 					}
+					if (monster[0][i1] == 0 && monster[1][i1] == 0 && monster[2][i1] == 0 && i1>0) i1--;
 					
 				}
 
