@@ -51,16 +51,9 @@ public class Ranking extends JFrame {
 		panel1.add(new JLabel("  이름 :"));
 		name=new JTextField(20);
 		panel1.add(name);
-		
-		JPanel panel2 = new JPanel();
-		panel2.add(new JLabel("  나이 :"));
-		age =new JTextField(3);
-		panel2.add(age);
 
 		this.add(panel1);
 		
-		this.add(panel1);
-		add(panel2);
 		JButton button = new JButton("확인");
 		panel1.add(button);
 		//버튼 리스너 연결
@@ -85,11 +78,8 @@ public class Ranking extends JFrame {
 			System.out.println(arg0.getActionCommand());
 			String n =name.getText();
 			System.out.println(n);
-			String a =age.getText();
-			System.out.println(a);
-			
 			//다이얼로그
-			JOptionPane.showMessageDialog(frame, n+a);
+			JOptionPane.showMessageDialog(frame, n);
 		}
 	}
 	
