@@ -124,13 +124,19 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-				if (timer_cnt == 0) {
+				if (timer_cnt == 0 && player_hp<=0) {
 					System.out.println("게임 오버");
 					time = timer_cnt;
 					timer.cancel();
 				}
 				if(boss_hp<=0) {
 					new Ranking();
+					setVisible(false);
+					timer.cancel();
+				}
+				
+				if (player_hp <= 0) {
+					new GameOver();
 					setVisible(false);
 					timer.cancel();
 				}
@@ -328,9 +334,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 					&& boss_attack.y > (playerY - 190) && boss_attack.y < playerY + 50) {
 				player_hp -= boss_attack.attack;
 				boss_attack_list.remove(boss_attack);
-			}
-			if (player_hp <= 0) {
-				// gameover = true;
+				System.out.println(player_hp);
 			}
 		}
 	}
