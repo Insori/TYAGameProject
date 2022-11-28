@@ -109,6 +109,11 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 
 	// 게임 오버
 	private boolean gameover;
+	//게임 클리어
+	private boolean gameclear;
+
+	private Audio bossHeart;
+	private Audio gameClear;
 
 	public BossMode() {
 		setUndecorated(true);
@@ -124,20 +129,9 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-				if (timer_cnt == 0 && player_hp<=0) {
+				if (timer_cnt == 0) {
 					System.out.println("게임 오버");
 					time = timer_cnt;
-					timer.cancel();
-				}
-				if(boss_hp<=0) {
-					new Ranking();
-					setVisible(false);
-					timer.cancel();
-				}
-				
-				if (player_hp <= 0) {
-					new GameOver();
-					setVisible(false);
 					timer.cancel();
 				}
 				timer_cnt--;
@@ -249,8 +243,10 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	// 스레드 실행 함수
 	public void run() {
 		cnt = 0;
+		bossHeart = new Audio("src/audio/HeartSound.wav", true);
+		gameClear = new Audio("src/audio/gameClear.wav", true);
 		while (true) {
-			while (gameover == false) {
+			while (gameover == false || gameclear == false) {
 				pretime = System.currentTimeMillis();
 				if (System.currentTimeMillis() - pretime < delay) {
 					try {
@@ -265,17 +261,24 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 					}
 				}
 			}
-			try {
-				Thread.sleep(5000);
-			} catch (Exception e) {
+			if(gameover == true) {
+				try {
+					Thread.sleep(2000);
+				}catch (Exception e) {}
 			}
+			else if(gameclear == true) {
+				try {
+					Thread.sleep(2000);
+				}catch(Exception e) {}
+			}
+			
 		}
 	}
 
 	// 보스 움직임
 	public void BossMove() {
 		bossX += speed;
-		if (bossX+boss_width > SCREEN_WIDTH) {
+		if (bossX + boss_width > SCREEN_WIDTH) {
 			speed *= -1;
 		} else if (bossX < 0) {
 			speed *= -1;
@@ -308,12 +311,15 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 
 			if (player_attack.x > (bossX - 85) && player_attack.x < bossX + 190 && player_attack.y > bossY
 					&& player_attack.y < bossY + 170) {
+				bossHeart.start();
 				boss_hp -= player_attack.attack;
-
 				player_attack_list.remove(player_attack);
 			}
 			if (boss_hp <= 0) {
 				boss_img = boss_over;
+				gameClear.start();
+//				new Ranking();
+//				setVisible(false);
 			}
 
 		}
@@ -334,7 +340,11 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 					&& boss_attack.y > (playerY - 190) && boss_attack.y < playerY + 50) {
 				player_hp -= boss_attack.attack;
 				boss_attack_list.remove(boss_attack);
-				System.out.println(player_hp);
+			}
+			if (player_hp <= 0) {
+				gameover = true;
+//				new GameOver();
+//				setVisible(false);
 			}
 		}
 	}
