@@ -135,7 +135,7 @@ public class NormalMode extends JFrame {
 					new GameOver();
 					timer.cancel();
 				}
-				if (cnt_monster>10&& i1==0) {
+				if (cnt_monster>70&& i1==0) {
 					new BossMode();
 					setVisible(false);
 					timer.cancel();
