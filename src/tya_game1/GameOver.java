@@ -35,13 +35,18 @@ public class GameOver extends JFrame {
 	
 	private Image screenImage;
 	private Graphics screenGraphic;
-	private Image GameOverImage = new ImageIcon(Main.class.getResource("../images/game_over_image.png")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	private Image GameOverImage = new ImageIcon(Main.class.getResource("../images/background_gameover.jpg")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 
-	private Image backButtonImage = new ImageIcon(Main.class.getResource("../images/back.png")).getImage();	//방법 버튼
-	private Image backButton1 = backButtonImage.getScaledInstance(SCREEN_WIDTH/13, SCREEN_HEIGHT/6, 0);
-	private ImageIcon backButton = new ImageIcon(backButton1);
+	private Image quitButtonImage = new ImageIcon(Main.class.getResource("../images/quit.png")).getImage();	//나가기 버튼
+	private Image quitButton1 = quitButtonImage.getScaledInstance(SCREEN_WIDTH/15, SCREEN_HEIGHT/22, 0);
+	private ImageIcon quitButton = new ImageIcon(quitButton1);
 	
-	private JButton backJButton = new JButton(backButton);
+	private Image restartButtonImage = new ImageIcon(Main.class.getResource("../images/restart.png")).getImage();	//다시 시작 버튼
+	private Image restartButton1 = restartButtonImage.getScaledInstance(SCREEN_WIDTH/12, SCREEN_HEIGHT/22, 0);
+	private ImageIcon restartButton = new ImageIcon(restartButton1);
+	
+	private JButton quitJButton = new JButton(quitButton);
+	private JButton restartJButton = new JButton(restartButton);
 	
 	public GameOver() {
 		setUndecorated(true);
@@ -55,11 +60,11 @@ public class GameOver extends JFrame {
 		int Button_height = SCREEN_WIDTH/20;
 		
 		//돌아가기 버튼
-		backJButton.setBounds(0, 0, SCREEN_WIDTH/13, Button_height);
-		backJButton.setBorderPainted(false);
-		backJButton.setContentAreaFilled(false);
-		backJButton.setFocusPainted(false);
-		backJButton.addMouseListener(new MouseAdapter() {
+		quitJButton.setBounds((SCREEN_WIDTH/2)-(SCREEN_WIDTH/5)-50, (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/4), quitButton1.getWidth(quitJButton), quitButton1.getHeight(quitJButton));
+		quitJButton.setBorderPainted(false);
+		quitJButton.setContentAreaFilled(false);
+		quitJButton.setFocusPainted(false);
+		quitJButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -73,7 +78,29 @@ public class GameOver extends JFrame {
 				new TyaGame();
 			}
 		});
-		add(backJButton);
+		add(quitJButton);
+		
+		//다시 시작 버튼
+		restartJButton.setBounds((SCREEN_WIDTH/2)+(SCREEN_WIDTH/5)-50, (SCREEN_HEIGHT/2)+(SCREEN_HEIGHT/4), restartButton1.getWidth(restartJButton), restartButton1.getHeight(restartJButton));
+		restartJButton.setBorderPainted(false);
+		restartJButton.setContentAreaFilled(false);
+		restartJButton.setFocusPainted(false);
+		restartJButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				new NormalMode();
+				setVisible(false);
+			}
+		});
+		add(restartJButton);
 	}
 	
 	public void paint(Graphics g) {
