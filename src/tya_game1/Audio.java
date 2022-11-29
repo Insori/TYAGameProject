@@ -17,7 +17,8 @@ public class Audio {
 
 	public Audio(String pathname, boolean isLoop) {
 		try {
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(pathname)));
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream
+					(new FileInputStream(pathname)));
 			clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 		}catch(LineUnavailableException e) {

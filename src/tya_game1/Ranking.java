@@ -45,6 +45,7 @@ public class Ranking extends JFrame {
 	private Graphics screenGraphic;
 	private Image background = new ImageIcon(Main.class.getResource("../images/background_ranking.jpg")).getImage().getScaledInstance(SCREEN_WIDTH, SCREEN_HEIGHT, 0); //배경 이미지 크기 변경
 
+	
 	public Ranking() {
 
 		JPanel panel1 = new JPanel();
