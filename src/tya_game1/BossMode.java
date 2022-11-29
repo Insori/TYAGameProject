@@ -138,6 +138,11 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 					timer.cancel();
 				}
 				timer_cnt--;
+				if(player_hp<=0) {
+					new GameOver();
+					setVisible(false);
+					timer.cancel();
+				}
 			}
 		};
 		timer.schedule(task, 1000, 1000);
@@ -349,8 +354,6 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 			if (player_hp <= 0) {
 				gameover = true;
 				gameOver.start();
-//				new GameOver();
-//				setVisible(false);
 			}
 		}
 	}
