@@ -2,7 +2,7 @@ package tya_game1;
 
 public class BossAttack {
 	int x, y;
-	int attack = 2;
+	int attack = 10;
 	
 	public BossAttack(int x, int y) {
 		this.x = x;

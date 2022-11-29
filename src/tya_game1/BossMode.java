@@ -244,7 +244,8 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	public void run() {
 		cnt = 0;
 		bossHeart = new Audio("src/audio/HeartSound.wav", true);
-		gameClear = new Audio("src/audio/gameClear.wav", true);
+		//gameClear = new Audio("src/audio/gameClear.wav", true);
+		//해당 클래스에서 재생하는 걸로 수정
 		while (true) {
 			while (gameover == false || gameclear == false) {
 				pretime = System.currentTimeMillis();
@@ -290,11 +291,11 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	public void keyTyped(KeyEvent e) {
 	}
 
-	// 키보드 움직임 이벤트
+	// 키보드 움직임 이벤트 - 수정
 	public void KeyProcess() {
-		if (KeyLeft && playerX - 10 > (SCREEN_WIDTH / 2) - (SCREEN_WIDTH / 4))
+		if (KeyLeft && playerX - 10 > 0)
 			playerX -= 12;
-		if (KeyRight && playerX + player_width + 10 < (SCREEN_WIDTH / 2) + (SCREEN_WIDTH / 4))
+		if (KeyRight && playerX + player_width + 10 < SCREEN_WIDTH)
 			playerX += 12;
 		if (shooting == true && cnt % 10 == 0) {
 			player_attack = new PlayerAttack(playerX + 45, playerY - 120);
