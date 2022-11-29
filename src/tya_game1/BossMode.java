@@ -115,6 +115,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	private Audio bossHeart;
 	private Audio gameClear;
 	private Audio gameOver;
+	private Audio attack;
 
 	public BossMode() {
 		setUndecorated(true);
@@ -247,7 +248,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		bossHeart = new Audio("src/audio/HeartSound.wav", true);
 		gameClear = new Audio("src/audio/gameClear.wav", true);
 		gameOver = new Audio("src/audio/gameover.wav", true);
-		
+		attack = new Audio("src/audio/attack.wav",true);
 		while (true) {
 			while (gameover == false || gameclear == false) {
 				pretime = System.currentTimeMillis();
@@ -311,6 +312,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		for (int i = 0; i < player_attack_list.size(); i++) {
 			player_attack = player_attack_list.get(i);
 			player_attack.fire();
+			attack.start();
 
 			if (player_attack.x > (bossX - 85) && player_attack.x < bossX + 190 && player_attack.y > bossY
 					&& player_attack.y < bossY + 170) {
