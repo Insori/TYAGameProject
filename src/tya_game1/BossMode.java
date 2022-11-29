@@ -303,6 +303,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		if (shooting == true && cnt % 10 == 0) {
 			player_attack = new PlayerAttack(playerX + 45, playerY - 120);
 			player_attack_list.add(player_attack);
+			attack.start();
 		}
 
 	}
@@ -312,7 +313,6 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 		for (int i = 0; i < player_attack_list.size(); i++) {
 			player_attack = player_attack_list.get(i);
 			player_attack.fire();
-			attack.start();
 
 			if (player_attack.x > (bossX - 85) && player_attack.x < bossX + 190 && player_attack.y > bossY
 					&& player_attack.y < bossY + 170) {
