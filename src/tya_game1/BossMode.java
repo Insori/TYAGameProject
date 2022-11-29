@@ -116,6 +116,7 @@ public class BossMode extends JFrame implements Runnable, KeyListener {
 	private Audio gameClear;
 	private Audio gameOver;
 	private Audio attack;
+	private Audio monHeart;
 
 	public BossMode() {
 		setUndecorated(true);

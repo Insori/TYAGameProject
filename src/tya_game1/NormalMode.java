@@ -115,6 +115,8 @@ public class NormalMode extends JFrame {
 
 	// 몬스터를 위한 변수
 	int i1 = 2;
+	
+	private Audio monHeart;
 
 	public NormalMode() {
 		setUndecorated(true);
@@ -124,6 +126,8 @@ public class NormalMode extends JFrame {
 		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
 		setFocusable(true);
+
+		monHeart = new Audio("src/audio/monHeart.wav", true);
 
 		// 타이머 실행
 		Timer timer = new Timer();
@@ -165,6 +169,7 @@ public class NormalMode extends JFrame {
 					case KeyEvent.VK_LEFT: // 아래 방향키 눌렀을 때
 						if (monster[0][i1] == 1) {
 							monster[0][i1] = 0;
+							monHeart.start();
 							cnt_monster++;
 						} else
 							timer_cnt--;
@@ -173,6 +178,7 @@ public class NormalMode extends JFrame {
 					case KeyEvent.VK_DOWN: // 왼쪽 방향키 눌렀을 때
 						if (monster[1][i1] == 1) {
 							monster[1][i1] = 0;
+							monHeart.start();
 							cnt_monster++;
 							}
 						else
@@ -182,6 +188,7 @@ public class NormalMode extends JFrame {
 					case KeyEvent.VK_RIGHT: // 오른쪽 방향키 눌렀을 때
 						if (monster[2][i1] == 1) {
 							monster[2][i1] = 0;
+							monHeart.start();
 							cnt_monster++;
 						} else
 							timer_cnt--;
