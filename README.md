@@ -4,7 +4,7 @@
 > 방향키를 이용해 작은 외계인을 처치합니다.
 > 보스 외계인까지 무찌르면 게임이 클리어됩니다.
 ## 개발 기간
-> 2022.11. ~ 2022.12.
+> 2022.10. ~ 2022.12.
 ## 사용 언어 및 개발 환경
 <img src="https://img.shields.io/badge/Java-007396.svg?&style=for-the-badge&logo=Java&logoColor=white">
 <img src="https://img.shields.io/badge/Eclipse%20IDE-2C2255.svg?&style=for-the-badge&logo=Eclipse%20IDE&logoColor=white">
